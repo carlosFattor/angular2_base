@@ -1,7 +1,7 @@
 <div class="container">
     <div [hidden]="submitted">
         <h1>Hero Form</h1>
-        <form *ngIf="active" (ngSubmit)="onSubmit()" #heroForm="ngForm">
+        <form *ngIf="active" (ngSubmit)="onSubmit(heroForm.form.value)" #heroForm="ngForm">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" required [(ngModel)]="model.name" name="name" #name="ngModel">
@@ -42,5 +42,22 @@
         </div>
         <br>
         <button class="btn btn-default" (click)="submitted=false">Edit</button>
+    </div>
+
+    <div class="ui raised segment">
+        <h2 class="ui header">Demo Form: with validations (explicit)</h2>
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit2(myForm.value)" class="ui form">
+
+            <div class="field">
+                <label for="skuInput">SKU</label>
+                <input type="text" id="skuInput" placeholder="SKU" [formControl]="sku">
+                <div *ngIf="!sku.valid" class="ui error message">SKU is invalid</div>
+                <div *ngIf="sku.hasError('required')" class="ui error message">SKU is required</div>
+            </div>
+
+            <div *ngIf="!myForm.valid" class="ui error message">Form is invalid</div>
+
+            <button type="submit" class="ui button">Submit</button>
+        </form>
     </div>
 </div>
